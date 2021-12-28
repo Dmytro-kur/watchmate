@@ -60,7 +60,9 @@ class StreamPlatformAV(APIView):
 
     def get(self, request):
         platform = StreamPlatform.objects.all()
-        serializer = StreamPlatformSerializer(platform, many=True)
+        serializer = StreamPlatformSerializer(
+            platform, many=True, context={'request': request}
+        )
         return Response(serializer.data)
 
     def post(self, request):
@@ -83,7 +85,7 @@ class StreamPlatformDetailAV(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        serializer = StreamPlatformSerializer(movie)
+        serializer = StreamPlatformSerializer(movie, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
