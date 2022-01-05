@@ -19,6 +19,8 @@ class WatchList(models.Model):
         StreamPlatform, on_delete=models.CASCADE, related_name="watchlist"
     )
     active = models.BooleanField(default=True)
+    avg_rating = models.FloatField(default=0)
+    number_rating = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -39,4 +41,5 @@ class Review(models.Model):
     update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.rating) + " | " + self.watchlist.title
+        return str(self.rating) + " | " + self.watchlist.title + " | " \
+            + str(self.review_user)
