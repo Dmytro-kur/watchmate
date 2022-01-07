@@ -25,6 +25,10 @@ from watchlist_app.api.serializers import (
 from watchlist_app.api.throttling import (
     ReviewCreateThrottle, ReviewListThrottle
 )
+from watchlist_app.api.pagination import (
+    WatchListPagination, WatchListLOPagination, WatchListCPagination
+)
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
@@ -120,8 +124,10 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
 class WatchListGV(generics.ListAPIView):
     queryset = WatchList.objects.all()
     serializer_class = WatchListSerializer
-    filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['avg_rating']
+    pagination_class = WatchListCPagination
+
+    # filter_backends = [filters.OrderingFilter]
+    # ordering_fields = ['avg_rating']
 
 
 class WatchListAV(APIView):
